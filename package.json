@@ -1,0 +1,25 @@
+{
+  "name": "barokat-rice.uz",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build:css": "tailwindcss -i ./src/input.css -o ./css/tailwind.css --minify",
+    "watch:css": "tailwindcss -i ./src/input.css -o ./css/tailwind.css --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alijanovanasxon707-coder/barokat-rice.uz.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alijanovanasxon707-coder/barokat-rice.uz/issues"
+  },
+  "homepage": "https://github.com/alijanovanasxon707-coder/barokat-rice.uz#readme",
+  "devDependencies": {
+    "tailwindcss": "^3.4.19"
+  }
+}
