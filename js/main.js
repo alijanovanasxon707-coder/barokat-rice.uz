@@ -6,15 +6,15 @@ function formatSom(amount) {
   return new Intl.NumberFormat("uz-UZ").format(amount) + " so'm";
 }
 
-function packagingLabel(p) {
-  return `${p.label} — ${p.weightKg} kg`;
+function packagingLabel(product, p) {
+  return `${p.label} — ${p.amount} ${product.unit}`;
 }
 
 function buildTelegramOrderLink(product, extra) {
   const lines = [
     `Assalomu alaykum! Buyurtma bermoqchiman:`,
     `Mahsulot: ${product.name} (${product.grade})`,
-    `Qadoqlash: ${extra && extra.packaging ? extra.packaging : packagingLabel(product.packagings[0])}`,
+    `Qadoqlash: ${extra && extra.packaging ? extra.packaging : packagingLabel(product, product.packagings[0])}`,
     `Miqdori: ${extra && extra.quantity ? extra.quantity : "1"}`,
     `Buyurtma turi: ${extra && extra.orderType ? extra.orderType : "Dona-dona"}`
   ];
@@ -47,7 +47,7 @@ function productCardHTML(product) {
           ${product.packagings
             .map(
               (p) =>
-                `<span class="text-xs font-medium bg-stone-100 text-stone-600 px-2 py-1 rounded-md">${packagingLabel(p)}</span>`
+                `<span class="text-xs font-medium bg-stone-100 text-stone-600 px-2 py-1 rounded-md">${packagingLabel(product, p)}</span>`
             )
             .join("")}
         </div>
@@ -55,12 +55,12 @@ function productCardHTML(product) {
         <div class="mt-1 grid grid-cols-2 gap-2 text-sm border-t border-stone-100 pt-3">
           <div>
             <p class="text-stone-500">Dona-dona narx</p>
-            <p class="font-bold text-charcoal">${formatSom(product.retailPricePerKg)}<span class="font-normal text-stone-400">/kg</span></p>
+            <p class="font-bold text-charcoal">${formatSom(product.retailPricePerKg)}<span class="font-normal text-stone-400">/${product.unit}</span></p>
           </div>
           <div>
             <p class="text-stone-500">Ulgurji narx</p>
-            <p class="font-bold text-leaf-700">${formatSom(product.wholesalePricePerKg)}<span class="font-normal text-stone-400">/kg</span></p>
-            <p class="text-xs text-stone-400">min. ${product.wholesaleMinKg} kg dan</p>
+            <p class="font-bold text-leaf-700">${formatSom(product.wholesalePricePerKg)}<span class="font-normal text-stone-400">/${product.unit}</span></p>
+            <p class="text-xs text-stone-400">min. ${product.wholesaleMinKg} ${product.unit} dan</p>
           </div>
         </div>
 
@@ -116,7 +116,7 @@ function openOrderModal(productId) {
 
   const packagingSelect = document.getElementById("modal-packaging");
   packagingSelect.innerHTML = activeProduct.packagings
-    .map((p) => `<option value="${packagingLabel(p)}">${packagingLabel(p)}</option>`)
+    .map((p) => `<option value="${packagingLabel(activeProduct, p)}">${packagingLabel(activeProduct, p)}</option>`)
     .join("");
 
   document.getElementById("modal-quantity").value = 1;
