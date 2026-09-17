@@ -25,12 +25,12 @@ function buildTelegramOrderLink(product, extra) {
 function productCardHTML(product) {
   const isAvailable = product.availability === "mavjud";
   const badgeClass = isAvailable
-    ? "bg-leaf-100 text-leaf-700"
-    : "bg-amber-100 text-amber-700";
+    ? "bg-leaf-100 text-leaf-700 dark:bg-leaf-900/40 dark:text-leaf-300"
+    : "bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300";
 
   return `
-    <article class="group flex flex-col bg-white rounded-2xl border border-stone-200 shadow-sm hover:shadow-lg transition-shadow overflow-hidden" data-category="${product.category}">
-      <div class="relative h-40 bg-gradient-to-br from-amber-100 to-leaf-50 flex items-center justify-center text-6xl">
+    <article class="group flex flex-col bg-white dark:bg-stone-800 rounded-2xl border border-stone-200 dark:border-stone-700 shadow-sm hover:shadow-lg transition-shadow overflow-hidden" data-category="${product.category}">
+      <div class="relative h-40 bg-gradient-to-br from-amber-100 to-leaf-50 dark:from-stone-700 dark:to-stone-800 flex items-center justify-center text-6xl">
         ${product.icon}
         <span class="absolute top-3 right-3 text-xs font-semibold px-2.5 py-1 rounded-full ${badgeClass}">
           ${AVAILABILITY_LABELS[product.availability]}
@@ -38,29 +38,29 @@ function productCardHTML(product) {
       </div>
       <div class="flex flex-col flex-1 p-5 gap-3">
         <div>
-          <h3 class="text-lg font-bold text-charcoal">${product.name}</h3>
-          <p class="text-sm text-stone-500">${product.grade}</p>
+          <h3 class="text-lg font-bold text-charcoal dark:text-stone-100">${product.name}</h3>
+          <p class="text-sm text-stone-500 dark:text-stone-400">${product.grade}</p>
         </div>
-        <p class="text-sm text-stone-600 leading-relaxed line-clamp-3">${product.description}</p>
+        <p class="text-sm text-stone-600 dark:text-stone-300 leading-relaxed line-clamp-3">${product.description}</p>
 
         <div class="flex flex-wrap gap-1.5">
           ${product.packagings
             .map(
               (p) =>
-                `<span class="text-xs font-medium bg-stone-100 text-stone-600 px-2 py-1 rounded-md">${packagingLabel(product, p)}</span>`
+                `<span class="text-xs font-medium bg-stone-100 dark:bg-stone-700 text-stone-600 dark:text-stone-300 px-2 py-1 rounded-md">${packagingLabel(product, p)}</span>`
             )
             .join("")}
         </div>
 
-        <div class="mt-1 grid grid-cols-2 gap-2 text-sm border-t border-stone-100 pt-3">
+        <div class="mt-1 grid grid-cols-2 gap-2 text-sm border-t border-stone-100 dark:border-stone-700 pt-3">
           <div>
-            <p class="text-stone-500">Kg narx</p>
-            <p class="font-bold text-charcoal">${formatSom(product.retailPricePerKg)}<span class="font-normal text-stone-400">/${product.unit}</span></p>
+            <p class="text-stone-500 dark:text-stone-400">Kg narx</p>
+            <p class="font-bold text-charcoal dark:text-stone-100">${formatSom(product.retailPricePerKg)}<span class="font-normal text-stone-400 dark:text-stone-500">/${product.unit}</span></p>
           </div>
           <div>
-            <p class="text-stone-500">Ulgurji narx</p>
-            <p class="font-bold text-leaf-700">${formatSom(product.wholesalePricePerKg)}<span class="font-normal text-stone-400">/${product.unit}</span></p>
-            <p class="text-xs text-stone-400">min. ${product.wholesaleMinKg} ${product.unit} dan</p>
+            <p class="text-stone-500 dark:text-stone-400">Ulgurji narx</p>
+            <p class="font-bold text-leaf-700 dark:text-leaf-400">${formatSom(product.wholesalePricePerKg)}<span class="font-normal text-stone-400 dark:text-stone-500">/${product.unit}</span></p>
+            <p class="text-xs text-stone-400 dark:text-stone-500">min. ${product.wholesaleMinKg} ${product.unit} dan</p>
           </div>
         </div>
 
@@ -95,12 +95,36 @@ function initFilters() {
     btn.addEventListener("click", () => {
       buttons.forEach((b) => {
         b.classList.remove("bg-amber-600", "text-white");
-        b.classList.add("bg-white", "text-charcoal");
+        b.classList.add("bg-white", "dark:bg-stone-800", "text-charcoal", "dark:text-stone-100");
       });
       btn.classList.add("bg-amber-600", "text-white");
-      btn.classList.remove("bg-white", "text-charcoal");
+      btn.classList.remove("bg-white", "dark:bg-stone-800", "text-charcoal", "dark:text-stone-100");
       renderCatalog(btn.dataset.filter);
     });
+  });
+}
+
+function initThemeToggle() {
+  const root = document.documentElement;
+  const toggle = document.getElementById("theme-toggle");
+  const iconMoon = document.getElementById("theme-icon-moon");
+  const iconSun = document.getElementById("theme-icon-sun");
+
+  function reflectIcons() {
+    const isDark = root.classList.contains("dark");
+    iconMoon.classList.toggle("hidden", isDark);
+    iconSun.classList.toggle("hidden", !isDark);
+  }
+
+  reflectIcons();
+
+  toggle.addEventListener("click", () => {
+    const next = root.classList.contains("dark") ? "light" : "dark";
+    root.classList.toggle("dark", next === "dark");
+    reflectIcons();
+    try {
+      localStorage.setItem("barokat-theme", next);
+    } catch (e) {}
   });
 }
 
@@ -215,4 +239,5 @@ document.addEventListener("DOMContentLoaded", () => {
   initContactForm();
   initFooterYear();
   initTelegramLinks();
+  initThemeToggle();
 });
