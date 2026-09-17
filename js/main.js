@@ -1,4 +1,4 @@
-const TELEGRAM_USERNAME = "barokat_rice";
+const TELEGRAM_USERNAME = "Abu202ua";
 const PHONE_NUMBER = "+998 50 756 00 00";
 const PHONE_HREF = "tel:+998507560000";
 
@@ -16,7 +16,7 @@ function buildTelegramOrderLink(product, extra) {
     `Mahsulot: ${product.name} (${product.grade})`,
     `Qadoqlash: ${extra && extra.packaging ? extra.packaging : packagingLabel(product, product.packagings[0])}`,
     `Miqdori: ${extra && extra.quantity ? extra.quantity : "1"}`,
-    `Buyurtma turi: ${extra && extra.orderType ? extra.orderType : "Dona-dona"}`
+    `Buyurtma turi: ${extra && extra.orderType ? extra.orderType : "Kg"}`
   ];
   const text = encodeURIComponent(lines.join("\n"));
   return `https://t.me/${TELEGRAM_USERNAME}?text=${text}`;
@@ -54,7 +54,7 @@ function productCardHTML(product) {
 
         <div class="mt-1 grid grid-cols-2 gap-2 text-sm border-t border-stone-100 pt-3">
           <div>
-            <p class="text-stone-500">Dona-dona narx</p>
+            <p class="text-stone-500">Kg narx</p>
             <p class="font-bold text-charcoal">${formatSom(product.retailPricePerKg)}<span class="font-normal text-stone-400">/${product.unit}</span></p>
           </div>
           <div>
