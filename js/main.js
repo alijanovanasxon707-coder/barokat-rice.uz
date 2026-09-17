@@ -75,11 +75,24 @@ function productCardHTML(product) {
   `;
 }
 
-function renderCatalog(filter) {
+let currentFilter = "barchasi";
+let currentSearch = "";
+
+function getFilteredProducts() {
+  return PRODUCTS.filter((p) => {
+    const matchesCategory = currentFilter === "barchasi" || p.category === currentFilter;
+    const matchesSearch =
+      !currentSearch ||
+      p.name.toLowerCase().includes(currentSearch) ||
+      p.grade.toLowerCase().includes(currentSearch);
+    return matchesCategory && matchesSearch;
+  });
+}
+
+function renderCatalog() {
   const grid = document.getElementById("catalog-grid");
   const empty = document.getElementById("catalog-empty");
-  const items =
-    filter === "barchasi" ? PRODUCTS : PRODUCTS.filter((p) => p.category === filter);
+  const items = getFilteredProducts();
 
   grid.innerHTML = items.map(productCardHTML).join("");
   empty.classList.toggle("hidden", items.length > 0);
@@ -99,8 +112,17 @@ function initFilters() {
       });
       btn.classList.add("bg-amber-600", "text-white");
       btn.classList.remove("bg-white", "dark:bg-stone-800", "text-charcoal", "dark:text-stone-100");
-      renderCatalog(btn.dataset.filter);
+      currentFilter = btn.dataset.filter;
+      renderCatalog();
     });
+  });
+}
+
+function initSearch() {
+  const input = document.getElementById("catalog-search");
+  input.addEventListener("input", () => {
+    currentSearch = input.value.trim().toLowerCase();
+    renderCatalog();
   });
 }
 
@@ -232,8 +254,9 @@ function initTelegramLinks() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  renderCatalog("barchasi");
+  renderCatalog();
   initFilters();
+  initSearch();
   initModal();
   initMobileNav();
   initContactForm();
