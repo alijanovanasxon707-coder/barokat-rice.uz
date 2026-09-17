@@ -35,7 +35,7 @@
 
       <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-stone-600 dark:text-stone-300">
         <a href="#home" class="hover:text-amber-700 dark:hover:text-amber-500 transition-colors">Bosh sahifa</a>
-        <a href="#catalog" class="catalog-trigger hover:text-amber-700 dark:hover:text-amber-500 transition-colors">Katalog</a>
+        <a href="#catalog" class="hover:text-amber-700 dark:hover:text-amber-500 transition-colors">Katalog</a>
         <a href="#about" class="hover:text-amber-700 dark:hover:text-amber-500 transition-colors">Biz haqimizda</a>
         <a href="#contact" class="hover:text-amber-700 dark:hover:text-amber-500 transition-colors">Aloqa</a>
       </nav>
@@ -67,7 +67,7 @@
 
     <div id="mobile-menu" class="hidden md:hidden pb-4 flex flex-col gap-3 text-sm font-medium text-stone-600 dark:text-stone-300">
       <a href="#home" class="py-1">Bosh sahifa</a>
-      <a href="#catalog" class="catalog-trigger py-1">Katalog</a>
+      <a href="#catalog" class="py-1">Katalog</a>
       <a href="#about" class="py-1">Biz haqimizda</a>
       <a href="#contact" class="py-1">Aloqa</a>
       <a data-telegram-link href="#" target="_blank" rel="noopener" class="mt-2 inline-flex justify-center items-center gap-2 bg-amber-600 text-white font-semibold px-4 py-2 rounded-xl">
@@ -92,7 +92,7 @@
       </p>
 
       <div class="mt-8 flex flex-wrap gap-4">
-        <a href="#catalog" class="catalog-trigger inline-flex items-center justify-center bg-amber-600 hover:bg-amber-700 text-white font-semibold px-6 py-3.5 rounded-xl transition-colors">
+        <a href="#catalog" class="inline-flex items-center justify-center bg-amber-600 hover:bg-amber-700 text-white font-semibold px-6 py-3.5 rounded-xl transition-colors">
           Katalogga o'tish
         </a>
         <a href="tel:+998507560000" class="inline-flex items-center justify-center bg-white dark:bg-stone-800 hover:bg-stone-50 dark:hover:bg-stone-700 border border-stone-300 dark:border-stone-600 text-charcoal dark:text-stone-100 font-semibold px-6 py-3.5 rounded-xl transition-colors">
@@ -129,7 +129,7 @@
 </section>
 
 <!-- CATALOG -->
-<section id="catalog" class="hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
+<section id="catalog" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
   <div class="text-center max-w-2xl mx-auto">
     <h2 class="text-3xl sm:text-4xl font-extrabold text-charcoal dark:text-stone-100">Mahsulotlar katalogi</h2>
     <p class="mt-3 text-stone-600 dark:text-stone-300">Har bir mahsulot uchun qadoqlash hajmi, kg va ulgurji narxlarni solishtiring.</p>
@@ -155,6 +155,12 @@
 
   <div id="catalog-grid" class="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
   <p id="catalog-empty" class="hidden text-center text-stone-500 dark:text-stone-400 mt-10">Qidiruv yoki tanlangan turkumga mos mahsulot topilmadi.</p>
+
+  <div class="mt-8 text-center">
+    <button id="catalog-show-all" class="hidden bg-white dark:bg-stone-800 border border-stone-300 dark:border-stone-600 text-charcoal dark:text-stone-100 font-semibold px-6 py-3 rounded-xl hover:bg-stone-50 dark:hover:bg-stone-700 transition-colors">
+      Hammasi
+    </button>
+  </div>
 </section>
 
 <!-- ABOUT -->
@@ -294,7 +300,7 @@
       <p class="font-semibold text-white mb-3">Sahifalar</p>
       <ul class="space-y-2 text-sm text-stone-400">
         <li><a href="#home" class="hover:text-white transition-colors">Bosh sahifa</a></li>
-        <li><a href="#catalog" class="catalog-trigger hover:text-white transition-colors">Katalog</a></li>
+        <li><a href="#catalog" class="hover:text-white transition-colors">Katalog</a></li>
         <li><a href="#about" class="hover:text-white transition-colors">Biz haqimizda</a></li>
         <li><a href="#contact" class="hover:text-white transition-colors">Aloqa</a></li>
       </ul>

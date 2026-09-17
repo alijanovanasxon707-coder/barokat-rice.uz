@@ -75,8 +75,10 @@ function productCardHTML(product) {
   `;
 }
 
+const CATALOG_PREVIEW_LIMIT = 6;
 let currentFilter = "barchasi";
 let currentSearch = "";
+let showAllProducts = false;
 
 function getFilteredProducts() {
   return PRODUCTS.filter((p) => {
@@ -92,10 +94,13 @@ function getFilteredProducts() {
 function renderCatalog() {
   const grid = document.getElementById("catalog-grid");
   const empty = document.getElementById("catalog-empty");
-  const items = getFilteredProducts();
+  const showAllBtn = document.getElementById("catalog-show-all");
+  const allItems = getFilteredProducts();
+  const items = showAllProducts ? allItems : allItems.slice(0, CATALOG_PREVIEW_LIMIT);
 
   grid.innerHTML = items.map(productCardHTML).join("");
-  empty.classList.toggle("hidden", items.length > 0);
+  empty.classList.toggle("hidden", allItems.length > 0);
+  showAllBtn.classList.toggle("hidden", showAllProducts || allItems.length <= CATALOG_PREVIEW_LIMIT);
 
   grid.querySelectorAll(".order-btn").forEach((btn) => {
     btn.addEventListener("click", () => openOrderModal(btn.dataset.productId));
@@ -113,6 +118,7 @@ function initFilters() {
       btn.classList.add("bg-amber-600", "text-white");
       btn.classList.remove("bg-white", "dark:bg-stone-800", "text-charcoal", "dark:text-stone-100");
       currentFilter = btn.dataset.filter;
+      showAllProducts = false;
       renderCatalog();
     });
   });
@@ -122,6 +128,15 @@ function initSearch() {
   const input = document.getElementById("catalog-search");
   input.addEventListener("input", () => {
     currentSearch = input.value.trim().toLowerCase();
+    showAllProducts = false;
+    renderCatalog();
+  });
+}
+
+function initShowAll() {
+  const btn = document.getElementById("catalog-show-all");
+  btn.addEventListener("click", () => {
+    showAllProducts = true;
     renderCatalog();
   });
 }
@@ -194,19 +209,6 @@ function initModal() {
   });
 }
 
-function initCatalogToggle() {
-  const section = document.getElementById("catalog");
-  document.querySelectorAll(".catalog-trigger").forEach((el) => {
-    el.addEventListener("click", (e) => {
-      e.preventDefault();
-      section.classList.remove("hidden");
-      requestAnimationFrame(() => {
-        section.scrollIntoView({ behavior: "smooth", block: "start" });
-      });
-    });
-  });
-}
-
 function initMobileNav() {
   const toggle = document.getElementById("nav-toggle");
   const menu = document.getElementById("mobile-menu");
@@ -270,7 +272,7 @@ document.addEventListener("DOMContentLoaded", () => {
   renderCatalog();
   initFilters();
   initSearch();
-  initCatalogToggle();
+  initShowAll();
   initModal();
   initMobileNav();
   initContactForm();
