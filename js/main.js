@@ -194,6 +194,19 @@ function initModal() {
   });
 }
 
+function initCatalogToggle() {
+  const section = document.getElementById("catalog");
+  document.querySelectorAll(".catalog-trigger").forEach((el) => {
+    el.addEventListener("click", (e) => {
+      e.preventDefault();
+      section.classList.remove("hidden");
+      requestAnimationFrame(() => {
+        section.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
+  });
+}
+
 function initMobileNav() {
   const toggle = document.getElementById("nav-toggle");
   const menu = document.getElementById("mobile-menu");
@@ -257,6 +270,7 @@ document.addEventListener("DOMContentLoaded", () => {
   renderCatalog();
   initFilters();
   initSearch();
+  initCatalogToggle();
   initModal();
   initMobileNav();
   initContactForm();
