@@ -20,8 +20,10 @@ const UI_STRINGS = {
     aria_theme: "Rejimni almashtirish",
     aria_nav_toggle: "Menyuni ochish",
     aria_lang_toggle: "Tilni almashtirish",
+    aria_settings: "Sozlamalar",
     aria_close: "Yopish",
     aria_cart_remove: "O'chirish",
+    settings_language: "Til",
 
     hero_badge: "Ulgurji va kg narxlarda yetkazib berish",
     hero_title: "Yuqori sifatli oziq-ovqat mahsulotlari —",
@@ -133,8 +135,10 @@ const UI_STRINGS = {
     aria_theme: "Переключить тему",
     aria_nav_toggle: "Открыть меню",
     aria_lang_toggle: "Сменить язык",
+    aria_settings: "Настройки",
     aria_close: "Закрыть",
     aria_cart_remove: "Удалить",
+    settings_language: "Язык",
 
     hero_badge: "Доставка оптом и в розницу (кг)",
     hero_title: "Качественные продукты питания —",

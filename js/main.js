@@ -500,8 +500,9 @@ function applyLanguage(lang) {
     if (map[key]) btn.textContent = map[key];
   });
 
-  const langBtn = document.getElementById("lang-toggle");
-  if (langBtn) langBtn.textContent = currentLang === "ru" ? "UZ" : "RU";
+  document.querySelectorAll(".lang-toggle-label").forEach((el) => {
+    el.textContent = currentLang === "ru" ? "UZ" : "RU";
+  });
 
   renderCatalog();
   populateContactProductSelect();
@@ -527,8 +528,30 @@ function initLangToggle() {
   } catch (e) {}
   applyLanguage(stored === "ru" ? "ru" : "uz");
 
-  document.getElementById("lang-toggle").addEventListener("click", () => {
-    applyLanguage(currentLang === "ru" ? "uz" : "ru");
+  document.querySelectorAll(".lang-toggle-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      applyLanguage(currentLang === "ru" ? "uz" : "ru");
+    });
+  });
+}
+
+function initSettingsMenu() {
+  const toggle = document.getElementById("settings-toggle");
+  const menu = document.getElementById("settings-menu");
+
+  toggle.addEventListener("click", (e) => {
+    e.stopPropagation();
+    menu.classList.toggle("hidden");
+  });
+
+  menu.querySelectorAll(".settings-menu-link").forEach((link) =>
+    link.addEventListener("click", () => menu.classList.add("hidden"))
+  );
+
+  document.addEventListener("click", (e) => {
+    if (!menu.classList.contains("hidden") && !menu.contains(e.target) && e.target !== toggle) {
+      menu.classList.add("hidden");
+    }
   });
 }
 
@@ -543,4 +566,5 @@ document.addEventListener("DOMContentLoaded", () => {
   initThemeToggle();
   initCart();
   initLangToggle();
+  initSettingsMenu();
 });
