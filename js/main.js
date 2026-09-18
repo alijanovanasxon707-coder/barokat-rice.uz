@@ -243,10 +243,11 @@ function removeFromCart(index) {
 }
 
 function renderCartBadge() {
-  const badge = document.getElementById("cart-badge");
   const count = cart.reduce((sum, item) => sum + item.quantity, 0);
-  badge.textContent = count;
-  badge.classList.toggle("hidden", count === 0);
+  document.querySelectorAll(".cart-badge").forEach((badge) => {
+    badge.textContent = count;
+    badge.classList.toggle("hidden", count === 0);
+  });
 }
 
 function renderCartModal() {
@@ -330,16 +331,17 @@ function initCart() {
   loadCart();
   renderCartBadge();
 
-  const cartBtn = document.getElementById("cart-toggle");
   const cartModal = document.getElementById("cart-modal");
   const cartClose = document.getElementById("cart-modal-close");
   const cartClear = document.getElementById("cart-clear");
   const cartSend = document.getElementById("cart-send");
 
-  cartBtn.addEventListener("click", () => {
-    renderCartModal();
-    cartModal.classList.remove("hidden");
-    document.body.classList.add("overflow-hidden");
+  document.querySelectorAll(".cart-open-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      renderCartModal();
+      cartModal.classList.remove("hidden");
+      document.body.classList.add("overflow-hidden");
+    });
   });
 
   function closeCartModal() {
@@ -413,17 +415,6 @@ function initModal() {
     const link = buildTelegramOrderLink(activeProduct, { packaging, quantity, orderType });
     window.open(link, "_blank", "noopener");
   });
-}
-
-function initMobileNav() {
-  const toggle = document.getElementById("nav-toggle");
-  const menu = document.getElementById("mobile-menu");
-  toggle.addEventListener("click", () => {
-    menu.classList.toggle("hidden");
-  });
-  menu.querySelectorAll("a").forEach((link) =>
-    link.addEventListener("click", () => menu.classList.add("hidden"))
-  );
 }
 
 function populateContactProductSelect() {
@@ -546,7 +537,6 @@ document.addEventListener("DOMContentLoaded", () => {
   initSearch();
   initShowAll();
   initModal();
-  initMobileNav();
   initContactForm();
   initFooterYear();
   initTelegramLinks();

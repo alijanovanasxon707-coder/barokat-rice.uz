@@ -13,6 +13,8 @@ const UI_STRINGS = {
     nav_contact: "Aloqa",
     nav_telegram_btn: "Telegram",
     mobile_telegram_cta: "Telegramda yozish",
+    bottom_nav_home: "Uy",
+    bottom_nav_profile: "Profil",
 
     aria_cart: "Savat",
     aria_theme: "Rejimni almashtirish",
@@ -124,6 +126,8 @@ const UI_STRINGS = {
     nav_contact: "Контакты",
     nav_telegram_btn: "Telegram",
     mobile_telegram_cta: "Написать в Telegram",
+    bottom_nav_home: "Главная",
+    bottom_nav_profile: "Профиль",
 
     aria_cart: "Корзина",
     aria_theme: "Переключить тему",
