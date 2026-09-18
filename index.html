@@ -34,21 +34,35 @@
       </a>
 
       <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-stone-600 dark:text-stone-300">
-        <a href="#home" class="hover:text-amber-700 dark:hover:text-amber-500 transition-colors">Bosh sahifa</a>
-        <a href="#catalog" class="hover:text-amber-700 dark:hover:text-amber-500 transition-colors">Katalog</a>
-        <a href="#about" class="hover:text-amber-700 dark:hover:text-amber-500 transition-colors">Biz haqimizda</a>
-        <a href="#contact" class="hover:text-amber-700 dark:hover:text-amber-500 transition-colors">Aloqa</a>
+        <a href="#home" data-i18n="nav_home" class="hover:text-amber-700 dark:hover:text-amber-500 transition-colors">Bosh sahifa</a>
+        <a href="#catalog" data-i18n="nav_catalog" class="hover:text-amber-700 dark:hover:text-amber-500 transition-colors">Katalog</a>
+        <a href="#about" data-i18n="nav_about" class="hover:text-amber-700 dark:hover:text-amber-500 transition-colors">Biz haqimizda</a>
+        <a href="#reviews" data-i18n="nav_reviews" class="hover:text-amber-700 dark:hover:text-amber-500 transition-colors">Fikrlar</a>
+        <a href="#contact" data-i18n="nav_contact" class="hover:text-amber-700 dark:hover:text-amber-500 transition-colors">Aloqa</a>
       </nav>
 
       <div class="hidden md:flex items-center gap-3">
         <a data-phone-link data-phone-text="true" href="#" class="text-sm font-semibold text-stone-700 dark:text-stone-300 hover:text-amber-700 dark:hover:text-amber-500 transition-colors"></a>
-        <a data-telegram-link href="#" target="_blank" rel="noopener" class="inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-700 text-white text-sm font-semibold px-4 py-2 rounded-xl transition-colors">
+        <a data-telegram-link href="#" target="_blank" rel="noopener" data-i18n="nav_telegram_btn" class="inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-700 text-white text-sm font-semibold px-4 py-2 rounded-xl transition-colors">
           Telegram
         </a>
       </div>
 
       <div class="flex items-center gap-1">
-        <button id="theme-toggle" type="button" class="p-2 rounded-lg text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors" aria-label="Rejimni almashtirish">
+        <button id="lang-toggle" type="button" data-i18n-aria="aria_lang_toggle" class="px-2.5 py-1.5 rounded-lg text-xs font-bold text-stone-600 dark:text-stone-300 border border-stone-300 dark:border-stone-600 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors" aria-label="Tilni almashtirish">
+          RU
+        </button>
+
+        <button id="cart-toggle" type="button" data-i18n-aria="aria_cart" class="relative p-2 rounded-lg text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors" aria-label="Savat">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h1.5l2.4 12.2a2 2 0 002 1.8h8.4a2 2 0 002-1.7L20.5 8H6" />
+            <circle cx="9" cy="20" r="1.3" fill="currentColor" stroke="none" />
+            <circle cx="17" cy="20" r="1.3" fill="currentColor" stroke="none" />
+          </svg>
+          <span id="cart-badge" class="hidden absolute top-0.5 right-0.5 bg-amber-600 text-white text-[10px] font-bold rounded-full h-4 w-4 flex items-center justify-center">0</span>
+        </button>
+
+        <button id="theme-toggle" type="button" data-i18n-aria="aria_theme" class="p-2 rounded-lg text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors" aria-label="Rejimni almashtirish">
           <svg id="theme-icon-moon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
           </svg>
@@ -57,7 +71,7 @@
           </svg>
         </button>
 
-        <button id="nav-toggle" class="md:hidden p-2 text-stone-700 dark:text-stone-300" aria-label="Menyuni ochish">
+        <button id="nav-toggle" class="md:hidden p-2 text-stone-700 dark:text-stone-300" data-i18n-aria="aria_nav_toggle" aria-label="Menyuni ochish">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
           </svg>
@@ -66,11 +80,12 @@
     </div>
 
     <div id="mobile-menu" class="hidden md:hidden pb-4 flex flex-col gap-3 text-sm font-medium text-stone-600 dark:text-stone-300">
-      <a href="#home" class="py-1">Bosh sahifa</a>
-      <a href="#catalog" class="py-1">Katalog</a>
-      <a href="#about" class="py-1">Biz haqimizda</a>
-      <a href="#contact" class="py-1">Aloqa</a>
-      <a data-telegram-link href="#" target="_blank" rel="noopener" class="mt-2 inline-flex justify-center items-center gap-2 bg-amber-600 text-white font-semibold px-4 py-2 rounded-xl">
+      <a href="#home" data-i18n="nav_home" class="py-1">Bosh sahifa</a>
+      <a href="#catalog" data-i18n="nav_catalog" class="py-1">Katalog</a>
+      <a href="#about" data-i18n="nav_about" class="py-1">Biz haqimizda</a>
+      <a href="#reviews" data-i18n="nav_reviews" class="py-1">Fikrlar</a>
+      <a href="#contact" data-i18n="nav_contact" class="py-1">Aloqa</a>
+      <a data-telegram-link href="#" target="_blank" rel="noopener" data-i18n="mobile_telegram_cta" class="mt-2 inline-flex justify-center items-center gap-2 bg-amber-600 text-white font-semibold px-4 py-2 rounded-xl">
         Telegramda yozish
       </a>
     </div>
@@ -81,21 +96,21 @@
 <section id="home" class="relative overflow-hidden bg-gradient-to-b from-amber-50 to-[#FAFAF9] dark:from-stone-800 dark:to-stone-900">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 grid md:grid-cols-2 gap-12 items-center">
     <div>
-      <span class="inline-block bg-leaf-100 text-leaf-800 dark:bg-leaf-900/40 dark:text-leaf-300 text-xs font-bold px-3 py-1.5 rounded-full mb-5">
+      <span data-i18n="hero_badge" class="inline-block bg-leaf-100 text-leaf-800 dark:bg-leaf-900/40 dark:text-leaf-300 text-xs font-bold px-3 py-1.5 rounded-full mb-5">
         Ulgurji va kg narxlarda yetkazib berish
       </span>
       <h1 class="text-4xl sm:text-5xl font-extrabold leading-tight text-charcoal dark:text-stone-100">
-        Yuqori sifatli oziq-ovqat mahsulotlari — <span class="text-amber-700 dark:text-amber-500">ishonchli narxlarda</span>
+        <span data-i18n="hero_title">Yuqori sifatli oziq-ovqat mahsulotlari —</span> <span data-i18n="hero_title_highlight" class="text-amber-700 dark:text-amber-500">ishonchli narxlarda</span>
       </h1>
-      <p class="mt-5 text-lg text-stone-600 dark:text-stone-300 leading-relaxed">
+      <p data-i18n="hero_paragraph" class="mt-5 text-lg text-stone-600 dark:text-stone-300 leading-relaxed">
         Guruch, grechka, yog', un, makaron va boshqa oziq-ovqat mahsulotlarini to'g'ridan-to'g'ri omborimizdan hamyonbop ulgurji narxlarda va kg hisobida sifatli xizmat bilan yetkazib beramiz.
       </p>
 
       <div class="mt-8 flex flex-wrap gap-4">
-        <a href="#catalog" class="inline-flex items-center justify-center bg-amber-600 hover:bg-amber-700 text-white font-semibold px-6 py-3.5 rounded-xl transition-colors">
+        <a href="#catalog" data-i18n="hero_btn_catalog" class="inline-flex items-center justify-center bg-amber-600 hover:bg-amber-700 text-white font-semibold px-6 py-3.5 rounded-xl transition-colors">
           Katalogga o'tish
         </a>
-        <a href="tel:+998507560000" class="inline-flex items-center justify-center bg-white dark:bg-stone-800 hover:bg-stone-50 dark:hover:bg-stone-700 border border-stone-300 dark:border-stone-600 text-charcoal dark:text-stone-100 font-semibold px-6 py-3.5 rounded-xl transition-colors">
+        <a href="tel:+998507560000" data-i18n="hero_btn_contact" class="inline-flex items-center justify-center bg-white dark:bg-stone-800 hover:bg-stone-50 dark:hover:bg-stone-700 border border-stone-300 dark:border-stone-600 text-charcoal dark:text-stone-100 font-semibold px-6 py-3.5 rounded-xl transition-colors">
           Bog'lanish
         </a>
       </div>
@@ -103,15 +118,15 @@
       <div class="mt-10 grid grid-cols-3 gap-4">
         <div class="bg-white/70 dark:bg-stone-800/70 rounded-xl p-4 border border-stone-200 dark:border-stone-700">
           <p class="text-2xl">🚚</p>
-          <p class="mt-1 text-xs font-semibold text-stone-600 dark:text-stone-300 leading-snug">To'g'ridan-to'g'ri yetkazib berish</p>
+          <p data-i18n="hero_card1" class="mt-1 text-xs font-semibold text-stone-600 dark:text-stone-300 leading-snug">To'g'ridan-to'g'ri yetkazib berish</p>
         </div>
         <div class="bg-white/70 dark:bg-stone-800/70 rounded-xl p-4 border border-stone-200 dark:border-stone-700">
           <p class="text-2xl">✅</p>
-          <p class="mt-1 text-xs font-semibold text-stone-600 dark:text-stone-300 leading-snug">Yuqori sifat nazorati</p>
+          <p data-i18n="hero_card2" class="mt-1 text-xs font-semibold text-stone-600 dark:text-stone-300 leading-snug">Yuqori sifat nazorati</p>
         </div>
         <div class="bg-white/70 dark:bg-stone-800/70 rounded-xl p-4 border border-stone-200 dark:border-stone-700">
           <p class="text-2xl">💰</p>
-          <p class="mt-1 text-xs font-semibold text-stone-600 dark:text-stone-300 leading-snug">Hamyonbop ulgurji narxlar</p>
+          <p data-i18n="hero_card3" class="mt-1 text-xs font-semibold text-stone-600 dark:text-stone-300 leading-snug">Hamyonbop ulgurji narxlar</p>
         </div>
       </div>
     </div>
@@ -121,8 +136,8 @@
         🌾
       </div>
       <div class="absolute -bottom-4 -left-4 bg-white dark:bg-stone-800 rounded-2xl shadow-lg border border-stone-200 dark:border-stone-700 px-5 py-4">
-        <p class="text-xs text-stone-500 dark:text-stone-400">Ombordagi mahsulotlar</p>
-        <p class="text-xl font-extrabold text-leaf-700 dark:text-leaf-400">50+ turdagi mahsulot</p>
+        <p data-i18n="hero_stat_label" class="text-xs text-stone-500 dark:text-stone-400">Ombordagi mahsulotlar</p>
+        <p data-i18n="hero_stat_value" class="text-xl font-extrabold text-leaf-700 dark:text-leaf-400">50+ turdagi mahsulot</p>
       </div>
     </div>
   </div>
@@ -131,15 +146,15 @@
 <!-- CATALOG -->
 <section id="catalog" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
   <div class="text-center max-w-2xl mx-auto">
-    <h2 class="text-3xl sm:text-4xl font-extrabold text-charcoal dark:text-stone-100">Mahsulotlar katalogi</h2>
-    <p class="mt-3 text-stone-600 dark:text-stone-300">Har bir mahsulot uchun qadoqlash hajmi, kg va ulgurji narxlarni solishtiring.</p>
+    <h2 data-i18n="catalog_title" class="text-3xl sm:text-4xl font-extrabold text-charcoal dark:text-stone-100">Mahsulotlar katalogi</h2>
+    <p data-i18n="catalog_subtitle" class="mt-3 text-stone-600 dark:text-stone-300">Har bir mahsulot uchun qadoqlash hajmi, kg va ulgurji narxlarni solishtiring.</p>
   </div>
 
   <div class="mt-10 max-w-md mx-auto relative">
     <svg class="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-stone-400 dark:text-stone-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m21 21-4.3-4.3M19 11a8 8 0 11-16 0 8 8 0 0116 0z" />
     </svg>
-    <input id="catalog-search" type="text" placeholder="Mahsulot nomini qidiring..." class="w-full rounded-xl border border-stone-300 dark:border-stone-600 dark:bg-stone-800 dark:text-stone-100 pl-12 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-500" />
+    <input id="catalog-search" type="text" data-i18n-placeholder="catalog_search_placeholder" placeholder="Mahsulot nomini qidiring..." class="w-full rounded-xl border border-stone-300 dark:border-stone-600 dark:bg-stone-800 dark:text-stone-100 pl-12 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-500" />
   </div>
 
   <div class="mt-8 flex flex-wrap justify-center gap-2">
@@ -154,10 +169,10 @@
   </div>
 
   <div id="catalog-grid" class="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-  <p id="catalog-empty" class="hidden text-center text-stone-500 dark:text-stone-400 mt-10">Qidiruv yoki tanlangan turkumga mos mahsulot topilmadi.</p>
+  <p id="catalog-empty" data-i18n="catalog_empty" class="hidden text-center text-stone-500 dark:text-stone-400 mt-10">Qidiruv yoki tanlangan turkumga mos mahsulot topilmadi.</p>
 
   <div class="mt-8 text-center">
-    <button id="catalog-show-all" class="hidden bg-white dark:bg-stone-800 border border-stone-300 dark:border-stone-600 text-charcoal dark:text-stone-100 font-semibold px-6 py-3 rounded-xl hover:bg-stone-50 dark:hover:bg-stone-700 transition-colors">
+    <button id="catalog-show-all" data-i18n="catalog_show_all" class="hidden bg-white dark:bg-stone-800 border border-stone-300 dark:border-stone-600 text-charcoal dark:text-stone-100 font-semibold px-6 py-3 rounded-xl hover:bg-stone-50 dark:hover:bg-stone-700 transition-colors">
       Hammasi
     </button>
   </div>
@@ -167,42 +182,112 @@
 <section id="about" class="bg-leaf-800 text-white">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20 grid md:grid-cols-2 gap-12 items-center">
     <div>
-      <h2 class="text-3xl sm:text-4xl font-extrabold">Biz haqimizda</h2>
-      <p class="mt-5 text-leaf-50/90 leading-relaxed">
+      <h2 data-i18n="about_title" class="text-3xl sm:text-4xl font-extrabold">Biz haqimizda</h2>
+      <p data-i18n="about_p1" class="mt-5 text-leaf-50/90 leading-relaxed">
         "Barokat" — O'zbekiston bo'ylab minglab oilalar, oshxonalar va do'konlar ishonib xarid qiladigan don hamda oziq-ovqat mahsulotlari yetkazib beruvchisi. Har bir mahsulotni omborimizda sinchiklab tekshiramiz — namlik, tozalik va sifat nazoratidan o'tmagan tovar mijozga yetib bormaydi.
       </p>
-      <p class="mt-4 text-leaf-50/90 leading-relaxed">
+      <p data-i18n="about_p2" class="mt-4 text-leaf-50/90 leading-relaxed">
         Vositachilarsiz, to'g'ridan-to'g'ri omborimizdan sotamiz — shu bois narxlarimiz doim raqobatbardosh. Ulgurji buyurtmalarga maxsus chegirmalar, kg hisobida esa har doim adolatli va shaffof narx — aynan shu tamoyil bizni 1000dan ortiq doimiy mijozning tanloviga aylantirdi.
       </p>
 
       <div class="mt-8 grid grid-cols-3 gap-6">
         <div>
           <p class="text-3xl font-extrabold">1000+</p>
-          <p class="text-sm text-leaf-50/80 mt-1">Doimiy mijozlar</p>
+          <p data-i18n="about_stat1_label" class="text-sm text-leaf-50/80 mt-1">Doimiy mijozlar</p>
         </div>
         <div>
           <p class="text-3xl font-extrabold">50+</p>
-          <p class="text-sm text-leaf-50/80 mt-1">Mahsulot turlari</p>
+          <p data-i18n="about_stat2_label" class="text-sm text-leaf-50/80 mt-1">Mahsulot turlari</p>
         </div>
         <div>
           <p class="text-3xl font-extrabold">100%</p>
-          <p class="text-sm text-leaf-50/80 mt-1">Sifat kafolati</p>
+          <p data-i18n="about_stat3_label" class="text-sm text-leaf-50/80 mt-1">Sifat kafolati</p>
         </div>
       </div>
     </div>
 
     <div class="grid gap-4">
       <div class="bg-white/10 rounded-2xl p-5 border border-white/15">
-        <p class="font-bold">🧾 Shaffof narxlar</p>
-        <p class="text-sm text-leaf-50/80 mt-1">Kg va ulgurji narxlar aniq va oldindan ma'lum.</p>
+        <p data-i18n="about_card1_title" class="font-bold">🧾 Shaffof narxlar</p>
+        <p data-i18n="about_card1_desc" class="text-sm text-leaf-50/80 mt-1">Kg va ulgurji narxlar aniq va oldindan ma'lum.</p>
       </div>
       <div class="bg-white/10 rounded-2xl p-5 border border-white/15">
-        <p class="font-bold">📦 Qulay qadoqlash</p>
-        <p class="text-sm text-leaf-50/80 mt-1">1 kg dan 50 kg gacha turli qadoqlash variantlari.</p>
+        <p data-i18n="about_card2_title" class="font-bold">📦 Qulay qadoqlash</p>
+        <p data-i18n="about_card2_desc" class="text-sm text-leaf-50/80 mt-1">1 kg dan 50 kg gacha turli qadoqlash variantlari.</p>
       </div>
       <div class="bg-white/10 rounded-2xl p-5 border border-white/15">
-        <p class="font-bold">🚛 Tezkor yetkazib berish</p>
-        <p class="text-sm text-leaf-50/80 mt-1">Toshkent va boshqa hududlarga o'z vaqtida yetkazib beramiz.</p>
+        <p data-i18n="about_card3_title" class="font-bold">🚛 Tezkor yetkazib berish</p>
+        <p data-i18n="about_card3_desc" class="text-sm text-leaf-50/80 mt-1">Toshkent va boshqa hududlarga o'z vaqtida yetkazib beramiz.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
+  <div class="text-center max-w-2xl mx-auto">
+    <h2 data-i18n="reviews_title" class="text-3xl sm:text-4xl font-extrabold text-charcoal dark:text-stone-100">Mijozlarimiz fikri</h2>
+    <p data-i18n="reviews_subtitle" class="mt-3 text-stone-600 dark:text-stone-300">Doimiy mijozlarimiz Barokat haqida shunday deydi.</p>
+  </div>
+
+  <div class="mt-10 grid md:grid-cols-3 gap-6">
+    <div class="bg-white dark:bg-stone-800 rounded-2xl border border-stone-200 dark:border-stone-700 p-6 flex flex-col gap-4">
+      <div class="flex text-amber-500">
+        <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 1.5l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.1-5.4 3.1 1.3-6-4.6-4.1 6.1-.6z"/></svg>
+        <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 1.5l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.1-5.4 3.1 1.3-6-4.6-4.1 6.1-.6z"/></svg>
+        <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 1.5l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.1-5.4 3.1 1.3-6-4.6-4.1 6.1-.6z"/></svg>
+        <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 1.5l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.1-5.4 3.1 1.3-6-4.6-4.1 6.1-.6z"/></svg>
+        <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 1.5l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.1-5.4 3.1 1.3-6-4.6-4.1 6.1-.6z"/></svg>
+      </div>
+      <p data-i18n="review1_text" class="text-stone-600 dark:text-stone-300 leading-relaxed flex-1">
+        "Ulgurji narxlar va sifat doim barqaror. Bir necha yildan beri faqat Barokat orqali guruch va yog' olamiz."
+      </p>
+      <div class="flex items-center gap-3 pt-2 border-t border-stone-100 dark:border-stone-700">
+        <div class="h-10 w-10 rounded-full bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 font-bold flex items-center justify-center">S</div>
+        <div>
+          <p class="font-semibold text-charcoal dark:text-stone-100 text-sm">Sardor</p>
+          <p data-i18n="review1_role" class="text-xs text-stone-500 dark:text-stone-400">Restoran egasi, Farg'ona</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white dark:bg-stone-800 rounded-2xl border border-stone-200 dark:border-stone-700 p-6 flex flex-col gap-4">
+      <div class="flex text-amber-500">
+        <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 1.5l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.1-5.4 3.1 1.3-6-4.6-4.1 6.1-.6z"/></svg>
+        <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 1.5l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.1-5.4 3.1 1.3-6-4.6-4.1 6.1-.6z"/></svg>
+        <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 1.5l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.1-5.4 3.1 1.3-6-4.6-4.1 6.1-.6z"/></svg>
+        <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 1.5l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.1-5.4 3.1 1.3-6-4.6-4.1 6.1-.6z"/></svg>
+        <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 1.5l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.1-5.4 3.1 1.3-6-4.6-4.1 6.1-.6z"/></svg>
+      </div>
+      <p data-i18n="review2_text" class="text-stone-600 dark:text-stone-300 leading-relaxed flex-1">
+        "Devzira guruchi juda sifatli va tozalangan. Palov mijozlarimga judayam yoqadi, doim shu yerdan olaman!"
+      </p>
+      <div class="flex items-center gap-3 pt-2 border-t border-stone-100 dark:border-stone-700">
+        <div class="h-10 w-10 rounded-full bg-leaf-100 dark:bg-leaf-900/40 text-leaf-700 dark:text-leaf-300 font-bold flex items-center justify-center">M</div>
+        <div>
+          <p class="font-semibold text-charcoal dark:text-stone-100 text-sm">Malika</p>
+          <p data-i18n="review2_role" class="text-xs text-stone-500 dark:text-stone-400">Oshpaz</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white dark:bg-stone-800 rounded-2xl border border-stone-200 dark:border-stone-700 p-6 flex flex-col gap-4">
+      <div class="flex text-amber-500">
+        <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 1.5l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.1-5.4 3.1 1.3-6-4.6-4.1 6.1-.6z"/></svg>
+        <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 1.5l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.1-5.4 3.1 1.3-6-4.6-4.1 6.1-.6z"/></svg>
+        <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 1.5l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.1-5.4 3.1 1.3-6-4.6-4.1 6.1-.6z"/></svg>
+        <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 1.5l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.1-5.4 3.1 1.3-6-4.6-4.1 6.1-.6z"/></svg>
+        <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 1.5l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.1-5.4 3.1 1.3-6-4.6-4.1 6.1-.6z"/></svg>
+      </div>
+      <p data-i18n="review3_text" class="text-stone-600 dark:text-stone-300 leading-relaxed flex-1">
+        "Yetkazib berish tez va narxlar hamyonbop. Ulgurji buyurtmalarda doim chegirma bor, do'konim uchun eng ishonchli hamkor."
+      </p>
+      <div class="flex items-center gap-3 pt-2 border-t border-stone-100 dark:border-stone-700">
+        <div class="h-10 w-10 rounded-full bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 font-bold flex items-center justify-center">B</div>
+        <div>
+          <p class="font-semibold text-charcoal dark:text-stone-100 text-sm">Bekzod</p>
+          <p data-i18n="review3_role" class="text-xs text-stone-500 dark:text-stone-400">Do'kon egasi, Qo'qon</p>
+        </div>
       </div>
     </div>
   </div>
@@ -211,8 +296,8 @@
 <!-- CONTACT -->
 <section id="contact" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
   <div class="text-center max-w-2xl mx-auto">
-    <h2 class="text-3xl sm:text-4xl font-extrabold text-charcoal dark:text-stone-100">Aloqa va buyurtma</h2>
-    <p class="mt-3 text-stone-600 dark:text-stone-300">Savolingiz bormi yoki buyurtma bermoqchimisiz? Quyidagi shakl orqali biz bilan bog'laning.</p>
+    <h2 data-i18n="contact_title" class="text-3xl sm:text-4xl font-extrabold text-charcoal dark:text-stone-100">Aloqa va buyurtma</h2>
+    <p data-i18n="contact_subtitle" class="mt-3 text-stone-600 dark:text-stone-300">Savolingiz bormi yoki buyurtma bermoqchimisiz? Quyidagi shakl orqali biz bilan bog'laning.</p>
   </div>
 
   <div class="mt-10 grid md:grid-cols-2 gap-10">
@@ -220,63 +305,63 @@
       <div class="bg-white dark:bg-stone-800 rounded-2xl border border-stone-200 dark:border-stone-700 p-5 flex items-start gap-4">
         <span class="text-2xl">📞</span>
         <div>
-          <p class="text-sm text-stone-500 dark:text-stone-400">Telefon raqami</p>
+          <p data-i18n="contact_phone_label" class="text-sm text-stone-500 dark:text-stone-400">Telefon raqami</p>
           <a data-phone-link data-phone-text="true" href="#" class="font-bold text-charcoal dark:text-stone-100"></a>
         </div>
       </div>
       <div class="bg-white dark:bg-stone-800 rounded-2xl border border-stone-200 dark:border-stone-700 p-5 flex items-start gap-4">
         <span class="text-2xl">💬</span>
         <div>
-          <p class="text-sm text-stone-500 dark:text-stone-400">Telegram</p>
+          <p data-i18n="contact_telegram_label" class="text-sm text-stone-500 dark:text-stone-400">Telegram</p>
           <a data-telegram-link href="#" target="_blank" rel="noopener" class="font-bold text-charcoal dark:text-stone-100">@Abu202ua</a>
         </div>
       </div>
       <div class="bg-white dark:bg-stone-800 rounded-2xl border border-stone-200 dark:border-stone-700 p-5 flex items-start gap-4">
         <span class="text-2xl">📍</span>
         <div>
-          <p class="text-sm text-stone-500 dark:text-stone-400">Ombor / Ofis manzili</p>
-          <p class="font-bold text-charcoal dark:text-stone-100">Farg'ona viloyati, Qo'qon shahar, Bog'dod tumani</p>
+          <p data-i18n="contact_address_label" class="text-sm text-stone-500 dark:text-stone-400">Ombor / Ofis manzili</p>
+          <p data-i18n="contact_address_value" class="font-bold text-charcoal dark:text-stone-100">Farg'ona viloyati, Qo'qon shahar, Bog'dod tumani</p>
         </div>
       </div>
 
-      <div class="rounded-2xl overflow-hidden border border-stone-200 dark:border-stone-700 h-56 bg-stone-100 dark:bg-stone-800 flex items-center justify-center text-stone-400 dark:text-stone-500 text-sm">
+      <div data-i18n="contact_map_text" class="rounded-2xl overflow-hidden border border-stone-200 dark:border-stone-700 h-56 bg-stone-100 dark:bg-stone-800 flex items-center justify-center text-stone-400 dark:text-stone-500 text-sm text-center px-4">
         Xarita joylashuvi (Farg'ona viloyati, Qo'qon shahar, Bog'dod tumani)
       </div>
     </div>
 
     <form id="contact-form" class="bg-white dark:bg-stone-800 rounded-2xl border border-stone-200 dark:border-stone-700 p-6 space-y-4">
       <div>
-        <label class="block text-sm font-semibold text-stone-700 dark:text-stone-300 mb-1.5" for="contact-name">Ismingiz</label>
-        <input id="contact-name" required type="text" placeholder="Ismingizni kiriting" class="w-full rounded-xl border border-stone-300 dark:border-stone-600 dark:bg-stone-900 dark:text-stone-100 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-amber-500" />
+        <label data-i18n="form_name_label" class="block text-sm font-semibold text-stone-700 dark:text-stone-300 mb-1.5" for="contact-name">Ismingiz</label>
+        <input id="contact-name" required type="text" data-i18n-placeholder="form_name_placeholder" placeholder="Ismingizni kiriting" class="w-full rounded-xl border border-stone-300 dark:border-stone-600 dark:bg-stone-900 dark:text-stone-100 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-amber-500" />
       </div>
       <div>
-        <label class="block text-sm font-semibold text-stone-700 dark:text-stone-300 mb-1.5" for="contact-phone">Telefon raqamingiz</label>
+        <label data-i18n="form_phone_label" class="block text-sm font-semibold text-stone-700 dark:text-stone-300 mb-1.5" for="contact-phone">Telefon raqamingiz</label>
         <input id="contact-phone" required type="tel" placeholder="+998 90 123 45 67" class="w-full rounded-xl border border-stone-300 dark:border-stone-600 dark:bg-stone-900 dark:text-stone-100 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-amber-500" />
       </div>
       <div>
-        <label class="block text-sm font-semibold text-stone-700 dark:text-stone-300 mb-1.5" for="contact-product">Mahsulot tanlovi</label>
+        <label data-i18n="form_product_label" class="block text-sm font-semibold text-stone-700 dark:text-stone-300 mb-1.5" for="contact-product">Mahsulot tanlovi</label>
         <select id="contact-product" class="w-full rounded-xl border border-stone-300 dark:border-stone-600 dark:bg-stone-900 dark:text-stone-100 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-amber-500"></select>
       </div>
       <div>
-        <label class="block text-sm font-semibold text-stone-700 dark:text-stone-300 mb-1.5" for="contact-quantity">Miqdori (kg)</label>
-        <input id="contact-quantity" type="text" placeholder="Masalan: 50 kg" class="w-full rounded-xl border border-stone-300 dark:border-stone-600 dark:bg-stone-900 dark:text-stone-100 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-amber-500" />
+        <label data-i18n="form_quantity_label" class="block text-sm font-semibold text-stone-700 dark:text-stone-300 mb-1.5" for="contact-quantity">Miqdori (kg)</label>
+        <input id="contact-quantity" type="text" data-i18n-placeholder="form_quantity_placeholder" placeholder="Masalan: 50 kg" class="w-full rounded-xl border border-stone-300 dark:border-stone-600 dark:bg-stone-900 dark:text-stone-100 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-amber-500" />
       </div>
       <div>
-        <p class="block text-sm font-semibold text-stone-700 dark:text-stone-300 mb-1.5">Buyurtma turi</p>
+        <p data-i18n="form_order_type_label" class="block text-sm font-semibold text-stone-700 dark:text-stone-300 mb-1.5">Buyurtma turi</p>
         <div class="flex gap-4">
           <label class="flex items-center gap-2 text-sm text-stone-600 dark:text-stone-300">
-            <input type="radio" name="contact-order-type" value="Kg" checked class="text-amber-600 focus:ring-amber-500" /> Kg
+            <input type="radio" name="contact-order-type" value="kg" checked class="text-amber-600 focus:ring-amber-500" /> <span data-i18n="order_type_kg">Kg</span>
           </label>
           <label class="flex items-center gap-2 text-sm text-stone-600 dark:text-stone-300">
-            <input type="radio" name="contact-order-type" value="Ulgurji" class="text-amber-600 focus:ring-amber-500" /> Ulgurji
+            <input type="radio" name="contact-order-type" value="ulgurji" class="text-amber-600 focus:ring-amber-500" /> <span data-i18n="order_type_ulgurji">Ulgurji</span>
           </label>
         </div>
       </div>
 
-      <button type="submit" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-semibold py-3 rounded-xl transition-colors">
+      <button type="submit" data-i18n="form_submit" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-semibold py-3 rounded-xl transition-colors">
         So'rovni yuborish
       </button>
-      <p id="contact-feedback" class="hidden text-sm text-leaf-700 dark:text-leaf-400 font-medium text-center">
+      <p id="contact-feedback" data-i18n="form_feedback" class="hidden text-sm text-leaf-700 dark:text-leaf-400 font-medium text-center">
         So'rovingiz Telegram orqali yuborildi. Tez orada siz bilan bog'lanamiz!
       </p>
     </form>
@@ -291,40 +376,41 @@
         <span class="text-2xl">🌾</span>
         <span class="text-xl font-extrabold text-white">Barokat</span>
       </div>
-      <p class="mt-3 text-sm text-stone-400 leading-relaxed">
+      <p data-i18n="footer_tagline" class="mt-3 text-sm text-stone-400 leading-relaxed">
         Sifatli oziq-ovqat mahsulotlarini ulgurji va kg hisobida yetkazib beruvchi ishonchli hamkoringiz.
       </p>
     </div>
 
     <div>
-      <p class="font-semibold text-white mb-3">Sahifalar</p>
+      <p data-i18n="footer_pages_heading" class="font-semibold text-white mb-3">Sahifalar</p>
       <ul class="space-y-2 text-sm text-stone-400">
-        <li><a href="#home" class="hover:text-white transition-colors">Bosh sahifa</a></li>
-        <li><a href="#catalog" class="hover:text-white transition-colors">Katalog</a></li>
-        <li><a href="#about" class="hover:text-white transition-colors">Biz haqimizda</a></li>
-        <li><a href="#contact" class="hover:text-white transition-colors">Aloqa</a></li>
+        <li><a href="#home" data-i18n="nav_home" class="hover:text-white transition-colors">Bosh sahifa</a></li>
+        <li><a href="#catalog" data-i18n="nav_catalog" class="hover:text-white transition-colors">Katalog</a></li>
+        <li><a href="#about" data-i18n="nav_about" class="hover:text-white transition-colors">Biz haqimizda</a></li>
+        <li><a href="#reviews" data-i18n="nav_reviews" class="hover:text-white transition-colors">Fikrlar</a></li>
+        <li><a href="#contact" data-i18n="nav_contact" class="hover:text-white transition-colors">Aloqa</a></li>
       </ul>
     </div>
 
     <div>
-      <p class="font-semibold text-white mb-3">Bog'lanish</p>
+      <p data-i18n="footer_contact_heading" class="font-semibold text-white mb-3">Bog'lanish</p>
       <ul class="space-y-2 text-sm text-stone-400">
         <li><a data-phone-link data-phone-text="true" href="#" class="hover:text-white transition-colors"></a></li>
         <li><a data-telegram-link href="#" target="_blank" rel="noopener" class="hover:text-white transition-colors">Telegram: @Abu202ua</a></li>
-        <li>Farg'ona viloyati, Qo'qon shahar</li>
+        <li data-i18n="footer_address">Farg'ona viloyati, Qo'qon shahar</li>
       </ul>
     </div>
   </div>
 
   <div class="border-t border-white/10 py-5 text-center text-xs text-stone-500">
-    &copy; <span id="footer-year"></span> Barokat. Barcha huquqlar himoyalangan.
+    &copy; <span id="footer-year"></span> <span data-i18n="footer_copyright">Barokat. Barcha huquqlar himoyalangan.</span>
   </div>
 </footer>
 
 <!-- ORDER MODAL -->
 <div id="order-modal" class="hidden fixed inset-0 z-50 bg-black/50 flex items-center justify-center px-4">
   <div class="bg-white dark:bg-stone-800 rounded-2xl w-full max-w-md p-6 relative">
-    <button id="modal-close" class="absolute top-4 right-4 text-stone-400 dark:text-stone-500 hover:text-charcoal dark:hover:text-stone-100" aria-label="Yopish">
+    <button id="modal-close" data-i18n-aria="aria_close" class="absolute top-4 right-4 text-stone-400 dark:text-stone-500 hover:text-charcoal dark:hover:text-stone-100" aria-label="Yopish">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
       </svg>
@@ -335,33 +421,72 @@
 
     <div class="space-y-4">
       <div>
-        <label class="block text-sm font-semibold text-stone-700 dark:text-stone-300 mb-1.5" for="modal-packaging">Qadoqlash hajmi</label>
+        <label data-i18n="modal_packaging_label" class="block text-sm font-semibold text-stone-700 dark:text-stone-300 mb-1.5" for="modal-packaging">Qadoqlash hajmi</label>
         <select id="modal-packaging" class="w-full rounded-xl border border-stone-300 dark:border-stone-600 dark:bg-stone-900 dark:text-stone-100 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-amber-500"></select>
       </div>
       <div>
-        <label class="block text-sm font-semibold text-stone-700 dark:text-stone-300 mb-1.5" for="modal-quantity">Miqdori (dona / qop)</label>
+        <label data-i18n="modal_quantity_label" class="block text-sm font-semibold text-stone-700 dark:text-stone-300 mb-1.5" for="modal-quantity">Miqdori (dona / qop)</label>
         <input id="modal-quantity" type="number" min="1" value="1" class="w-full rounded-xl border border-stone-300 dark:border-stone-600 dark:bg-stone-900 dark:text-stone-100 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-amber-500" />
       </div>
       <div>
-        <p class="block text-sm font-semibold text-stone-700 dark:text-stone-300 mb-1.5">Buyurtma turi</p>
+        <p data-i18n="form_order_type_label" class="block text-sm font-semibold text-stone-700 dark:text-stone-300 mb-1.5">Buyurtma turi</p>
         <div class="flex gap-4">
           <label class="flex items-center gap-2 text-sm text-stone-600 dark:text-stone-300">
-            <input id="order-type-chakana" type="radio" name="order-type" value="Kg" checked class="text-amber-600 focus:ring-amber-500" /> Kg
+            <input id="order-type-chakana" type="radio" name="order-type" value="kg" checked class="text-amber-600 focus:ring-amber-500" /> <span data-i18n="order_type_kg">Kg</span>
           </label>
           <label class="flex items-center gap-2 text-sm text-stone-600 dark:text-stone-300">
-            <input type="radio" name="order-type" value="Ulgurji" class="text-amber-600 focus:ring-amber-500" /> Ulgurji
+            <input type="radio" name="order-type" value="ulgurji" class="text-amber-600 focus:ring-amber-500" /> <span data-i18n="order_type_ulgurji">Ulgurji</span>
           </label>
         </div>
       </div>
 
-      <button id="modal-telegram-btn" class="w-full inline-flex items-center justify-center gap-2 bg-amber-600 hover:bg-amber-700 text-white font-semibold py-3 rounded-xl transition-colors">
+      <button id="modal-telegram-btn" data-i18n="modal_send_btn" class="w-full inline-flex items-center justify-center gap-2 bg-amber-600 hover:bg-amber-700 text-white font-semibold py-3 rounded-xl transition-colors">
         Telegram orqali buyurtma berish
       </button>
     </div>
   </div>
 </div>
 
+<!-- CART MODAL -->
+<div id="cart-modal" class="hidden fixed inset-0 z-50 bg-black/50 flex items-center justify-center px-4">
+  <div class="bg-white dark:bg-stone-800 rounded-2xl w-full max-w-lg p-6 relative max-h-[85vh] flex flex-col">
+    <button id="cart-modal-close" data-i18n-aria="aria_close" class="absolute top-4 right-4 text-stone-400 dark:text-stone-500 hover:text-charcoal dark:hover:text-stone-100" aria-label="Yopish">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+
+    <h3 data-i18n="cart_title" class="text-xl font-bold text-charcoal dark:text-stone-100">Savat</h3>
+    <p id="cart-empty" data-i18n="cart_empty_msg" class="text-sm text-stone-500 dark:text-stone-400 mt-4">Savatingiz hozircha bo'sh. Mahsulot kartochkasidagi "Savatga qo'shish" tugmasini bosing.</p>
+
+    <div id="cart-items" class="mt-2 flex-1 overflow-y-auto"></div>
+
+    <div id="cart-footer" class="hidden mt-4 pt-4 border-t border-stone-200 dark:border-stone-700 space-y-3">
+      <div>
+        <p data-i18n="form_order_type_label" class="block text-sm font-semibold text-stone-700 dark:text-stone-300 mb-1.5">Buyurtma turi</p>
+        <div class="flex gap-4">
+          <label class="flex items-center gap-2 text-sm text-stone-600 dark:text-stone-300">
+            <input type="radio" name="cart-order-type" value="kg" checked class="text-amber-600 focus:ring-amber-500" /> <span data-i18n="order_type_kg">Kg</span>
+          </label>
+          <label class="flex items-center gap-2 text-sm text-stone-600 dark:text-stone-300">
+            <input type="radio" name="cart-order-type" value="ulgurji" class="text-amber-600 focus:ring-amber-500" /> <span data-i18n="order_type_ulgurji">Ulgurji</span>
+          </label>
+        </div>
+      </div>
+      <div class="flex gap-2">
+        <button id="cart-clear" data-i18n="cart_clear_btn" class="flex-1 bg-white dark:bg-stone-700 border border-stone-300 dark:border-stone-600 text-charcoal dark:text-stone-100 font-semibold py-2.5 rounded-xl hover:bg-stone-50 dark:hover:bg-stone-600 transition-colors text-sm">
+          Tozalash
+        </button>
+        <button id="cart-send" data-i18n="cart_send_btn" class="flex-[2] bg-amber-600 hover:bg-amber-700 text-white font-semibold py-2.5 rounded-xl transition-colors text-sm">
+          Telegram orqali yuborish
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script src="js/products.js"></script>
+<script src="js/i18n.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

@@ -2,46 +2,76 @@ const TELEGRAM_USERNAME = "Abu202ua";
 const PHONE_NUMBER = "+998 50 756 00 00";
 const PHONE_HREF = "tel:+998507560000";
 
+let currentLang = "uz";
+
+function t(key) {
+  return (UI_STRINGS[currentLang] && UI_STRINGS[currentLang][key]) || key;
+}
+
+function pf(product, field) {
+  if (currentLang === "ru" && product[field + "Ru"]) return product[field + "Ru"];
+  return product[field];
+}
+
+function unitLabel(unit) {
+  return currentLang === "ru" ? UNIT_LABELS_RU[unit] || unit : unit;
+}
+
+function availabilityLabel(product) {
+  const map = currentLang === "ru" ? AVAILABILITY_LABELS_RU : AVAILABILITY_LABELS;
+  return map[product.availability];
+}
+
+function minLabel(qty, unit) {
+  return currentLang === "ru" ? `от ${qty} ${unitLabel(unit)}` : `min. ${qty} ${unitLabel(unit)} dan`;
+}
+
+function orderTypeLabel(token) {
+  return token === "ulgurji" ? t("order_type_ulgurji") : t("order_type_kg");
+}
+
 function formatSom(amount) {
-  return new Intl.NumberFormat("uz-UZ").format(amount) + " so'm";
+  const currency = currentLang === "ru" ? "сум" : "so'm";
+  return new Intl.NumberFormat("uz-UZ").format(amount) + " " + currency;
 }
 
 function packagingLabel(product, p) {
-  return `${p.label} — ${p.amount} ${product.unit}`;
+  const label = currentLang === "ru" ? PACKAGING_LABELS_RU[p.label] || p.label : p.label;
+  return `${label} — ${p.amount} ${unitLabel(product.unit)}`;
 }
 
 function buildTelegramOrderLink(product, extra) {
   const lines = [
-    `Assalomu alaykum! Buyurtma bermoqchiman:`,
-    `Mahsulot: ${product.name} (${product.grade})`,
-    `Qadoqlash: ${extra && extra.packaging ? extra.packaging : packagingLabel(product, product.packagings[0])}`,
-    `Miqdori: ${extra && extra.quantity ? extra.quantity : "1"}`,
-    `Buyurtma turi: ${extra && extra.orderType ? extra.orderType : "Kg"}`
+    t("msg_order_greeting"),
+    `${t("msg_product")}: ${pf(product, "name")} (${pf(product, "grade")})`,
+    `${t("msg_packaging")}: ${extra && extra.packaging ? extra.packaging : packagingLabel(product, product.packagings[0])}`,
+    `${t("msg_quantity")}: ${extra && extra.quantity ? extra.quantity : "1"}`,
+    `${t("msg_order_type")}: ${orderTypeLabel(extra && extra.orderType ? extra.orderType : "kg")}`
   ];
   const text = encodeURIComponent(lines.join("\n"));
   return `https://t.me/${TELEGRAM_USERNAME}?text=${text}`;
 }
 
 function productCardHTML(product) {
-  const isAvailable = product.availability === "mavjud";
-  const badgeClass = isAvailable
-    ? "bg-leaf-100 text-leaf-700 dark:bg-leaf-900/40 dark:text-leaf-300"
-    : "bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300";
+  const badgeClass =
+    product.availability === "mavjud"
+      ? "bg-leaf-100 text-leaf-700 dark:bg-leaf-900/40 dark:text-leaf-300"
+      : "bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300";
 
   return `
     <article class="group flex flex-col bg-white dark:bg-stone-800 rounded-2xl border border-stone-200 dark:border-stone-700 shadow-sm hover:shadow-lg transition-shadow overflow-hidden" data-category="${product.category}">
       <div class="relative h-40 bg-gradient-to-br from-amber-100 to-leaf-50 dark:from-stone-700 dark:to-stone-800 flex items-center justify-center text-6xl">
         ${product.icon}
         <span class="absolute top-3 right-3 text-xs font-semibold px-2.5 py-1 rounded-full ${badgeClass}">
-          ${AVAILABILITY_LABELS[product.availability]}
+          ${availabilityLabel(product)}
         </span>
       </div>
       <div class="flex flex-col flex-1 p-5 gap-3">
         <div>
-          <h3 class="text-lg font-bold text-charcoal dark:text-stone-100">${product.name}</h3>
-          <p class="text-sm text-stone-500 dark:text-stone-400">${product.grade}</p>
+          <h3 class="text-lg font-bold text-charcoal dark:text-stone-100">${pf(product, "name")}</h3>
+          <p class="text-sm text-stone-500 dark:text-stone-400">${pf(product, "grade")}</p>
         </div>
-        <p class="text-sm text-stone-600 dark:text-stone-300 leading-relaxed line-clamp-3">${product.description}</p>
+        <p class="text-sm text-stone-600 dark:text-stone-300 leading-relaxed line-clamp-3">${pf(product, "description")}</p>
 
         <div class="flex flex-wrap gap-1.5">
           ${product.packagings
@@ -54,22 +84,30 @@ function productCardHTML(product) {
 
         <div class="mt-1 grid grid-cols-2 gap-2 text-sm border-t border-stone-100 dark:border-stone-700 pt-3">
           <div>
-            <p class="text-stone-500 dark:text-stone-400">Kg narx</p>
-            <p class="font-bold text-charcoal dark:text-stone-100">${formatSom(product.retailPricePerKg)}<span class="font-normal text-stone-400 dark:text-stone-500">/${product.unit}</span></p>
+            <p class="text-stone-500 dark:text-stone-400">${t("product_price_retail")}</p>
+            <p class="font-bold text-charcoal dark:text-stone-100">${formatSom(product.retailPricePerKg)}<span class="font-normal text-stone-400 dark:text-stone-500">/${unitLabel(product.unit)}</span></p>
           </div>
           <div>
-            <p class="text-stone-500 dark:text-stone-400">Ulgurji narx</p>
-            <p class="font-bold text-leaf-700 dark:text-leaf-400">${formatSom(product.wholesalePricePerKg)}<span class="font-normal text-stone-400 dark:text-stone-500">/${product.unit}</span></p>
-            <p class="text-xs text-stone-400 dark:text-stone-500">min. ${product.wholesaleMinKg} ${product.unit} dan</p>
+            <p class="text-stone-500 dark:text-stone-400">${t("product_price_wholesale")}</p>
+            <p class="font-bold text-leaf-700 dark:text-leaf-400">${formatSom(product.wholesalePricePerKg)}<span class="font-normal text-stone-400 dark:text-stone-500">/${unitLabel(product.unit)}</span></p>
+            <p class="text-xs text-stone-400 dark:text-stone-500">${minLabel(product.wholesaleMinKg, product.unit)}</p>
           </div>
         </div>
 
-        <button
-          class="order-btn mt-2 w-full bg-amber-600 hover:bg-amber-700 text-white font-semibold py-2.5 rounded-xl transition-colors"
-          data-product-id="${product.id}"
-        >
-          Buyurtma berish
-        </button>
+        <div class="mt-2 flex gap-2">
+          <button
+            class="add-cart-btn flex-1 bg-white dark:bg-stone-700 border border-amber-600 text-amber-700 dark:text-amber-400 font-semibold py-2.5 rounded-xl hover:bg-amber-50 dark:hover:bg-stone-600 transition-colors text-sm"
+            data-product-id="${product.id}"
+          >
+            ${t("add_to_cart_btn")}
+          </button>
+          <button
+            class="order-btn flex-1 bg-amber-600 hover:bg-amber-700 text-white font-semibold py-2.5 rounded-xl transition-colors text-sm"
+            data-product-id="${product.id}"
+          >
+            ${t("order_btn")}
+          </button>
+        </div>
       </div>
     </article>
   `;
@@ -83,10 +121,9 @@ let showAllProducts = false;
 function getFilteredProducts() {
   return PRODUCTS.filter((p) => {
     const matchesCategory = currentFilter === "barchasi" || p.category === currentFilter;
-    const matchesSearch =
-      !currentSearch ||
-      p.name.toLowerCase().includes(currentSearch) ||
-      p.grade.toLowerCase().includes(currentSearch);
+    const name = pf(p, "name").toLowerCase();
+    const grade = pf(p, "grade").toLowerCase();
+    const matchesSearch = !currentSearch || name.includes(currentSearch) || grade.includes(currentSearch);
     return matchesCategory && matchesSearch;
   });
 }
@@ -104,6 +141,9 @@ function renderCatalog() {
 
   grid.querySelectorAll(".order-btn").forEach((btn) => {
     btn.addEventListener("click", () => openOrderModal(btn.dataset.productId));
+  });
+  grid.querySelectorAll(".add-cart-btn").forEach((btn) => {
+    btn.addEventListener("click", () => addToCart(btn.dataset.productId));
   });
 }
 
@@ -165,6 +205,172 @@ function initThemeToggle() {
   });
 }
 
+let cart = [];
+
+function loadCart() {
+  try {
+    const raw = localStorage.getItem("barokat-cart");
+    cart = raw ? JSON.parse(raw) : [];
+  } catch (e) {
+    cart = [];
+  }
+}
+
+function saveCart() {
+  try {
+    localStorage.setItem("barokat-cart", JSON.stringify(cart));
+  } catch (e) {}
+}
+
+function addToCart(productId) {
+  const product = PRODUCTS.find((p) => p.id === productId);
+  if (!product) return;
+  const existing = cart.find((item) => item.productId === productId && item.packagingIndex === 0);
+  if (existing) {
+    existing.quantity += 1;
+  } else {
+    cart.push({ productId, packagingIndex: 0, quantity: 1 });
+  }
+  saveCart();
+  renderCartBadge();
+}
+
+function removeFromCart(index) {
+  cart.splice(index, 1);
+  saveCart();
+  renderCartBadge();
+  renderCartModal();
+}
+
+function renderCartBadge() {
+  const badge = document.getElementById("cart-badge");
+  const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+  badge.textContent = count;
+  badge.classList.toggle("hidden", count === 0);
+}
+
+function renderCartModal() {
+  const list = document.getElementById("cart-items");
+  const emptyMsg = document.getElementById("cart-empty");
+  const footer = document.getElementById("cart-footer");
+
+  if (cart.length === 0) {
+    list.innerHTML = "";
+    emptyMsg.classList.remove("hidden");
+    footer.classList.add("hidden");
+    return;
+  }
+
+  emptyMsg.classList.add("hidden");
+  footer.classList.remove("hidden");
+
+  list.innerHTML = cart
+    .map((item, index) => {
+      const product = PRODUCTS.find((p) => p.id === item.productId);
+      if (!product) return "";
+      const packagingOptions = product.packagings
+        .map((p, i) => {
+          const selected = i === (item.packagingIndex || 0) ? "selected" : "";
+          return `<option value="${i}" ${selected}>${packagingLabel(product, p)}</option>`;
+        })
+        .join("");
+      return `
+        <div class="flex items-start gap-3 py-3 border-b border-stone-100 dark:border-stone-700 last:border-0">
+          <div class="flex-1">
+            <p class="font-semibold text-charcoal dark:text-stone-100 text-sm">${pf(product, "name")}</p>
+            <div class="mt-2 flex flex-wrap items-center gap-2">
+              <select class="cart-packaging text-xs rounded-lg border border-stone-300 dark:border-stone-600 dark:bg-stone-900 dark:text-stone-100 px-2 py-1.5" data-index="${index}">
+                ${packagingOptions}
+              </select>
+              <input type="number" min="1" value="${item.quantity}" class="cart-quantity w-16 text-xs rounded-lg border border-stone-300 dark:border-stone-600 dark:bg-stone-900 dark:text-stone-100 px-2 py-1.5" data-index="${index}" />
+            </div>
+          </div>
+          <button class="cart-remove text-stone-400 dark:text-stone-500 hover:text-red-600 dark:hover:text-red-400" data-index="${index}" aria-label="${t("aria_cart_remove")}">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      `;
+    })
+    .join("");
+
+  list.querySelectorAll(".cart-packaging").forEach((select) => {
+    select.addEventListener("change", () => {
+      cart[Number(select.dataset.index)].packagingIndex = Number(select.value);
+      saveCart();
+    });
+  });
+  list.querySelectorAll(".cart-quantity").forEach((input) => {
+    input.addEventListener("change", () => {
+      const qty = Math.max(1, parseInt(input.value, 10) || 1);
+      cart[Number(input.dataset.index)].quantity = qty;
+      saveCart();
+      renderCartBadge();
+    });
+  });
+  list.querySelectorAll(".cart-remove").forEach((btn) => {
+    btn.addEventListener("click", () => removeFromCart(Number(btn.dataset.index)));
+  });
+}
+
+function buildCartTelegramLink(orderType) {
+  const lines = [t("msg_cart_greeting")];
+  cart.forEach((item, i) => {
+    const product = PRODUCTS.find((p) => p.id === item.productId);
+    if (!product) return;
+    const packaging = packagingLabel(product, product.packagings[item.packagingIndex || 0]);
+    lines.push(`${i + 1}) ${pf(product, "name")} — ${packaging} — ${item.quantity} ${t("msg_cart_unit")}`);
+  });
+  lines.push(`${t("msg_order_type")}: ${orderTypeLabel(orderType)}`);
+  return `https://t.me/${TELEGRAM_USERNAME}?text=${encodeURIComponent(lines.join("\n"))}`;
+}
+
+function initCart() {
+  loadCart();
+  renderCartBadge();
+
+  const cartBtn = document.getElementById("cart-toggle");
+  const cartModal = document.getElementById("cart-modal");
+  const cartClose = document.getElementById("cart-modal-close");
+  const cartClear = document.getElementById("cart-clear");
+  const cartSend = document.getElementById("cart-send");
+
+  cartBtn.addEventListener("click", () => {
+    renderCartModal();
+    cartModal.classList.remove("hidden");
+    document.body.classList.add("overflow-hidden");
+  });
+
+  function closeCartModal() {
+    cartModal.classList.add("hidden");
+    document.body.classList.remove("overflow-hidden");
+  }
+
+  cartClose.addEventListener("click", closeCartModal);
+  cartModal.addEventListener("click", (e) => {
+    if (e.target.id === "cart-modal") closeCartModal();
+  });
+
+  cartClear.addEventListener("click", () => {
+    cart = [];
+    saveCart();
+    renderCartBadge();
+    renderCartModal();
+  });
+
+  cartSend.addEventListener("click", () => {
+    if (cart.length === 0) return;
+    const orderType = document.querySelector('input[name="cart-order-type"]:checked').value;
+    const link = buildCartTelegramLink(orderType);
+    window.open(link, "_blank", "noopener");
+    cart = [];
+    saveCart();
+    renderCartBadge();
+    closeCartModal();
+  });
+}
+
 let activeProduct = null;
 
 function openOrderModal(productId) {
@@ -172,8 +378,8 @@ function openOrderModal(productId) {
   if (!activeProduct) return;
 
   const modal = document.getElementById("order-modal");
-  document.getElementById("modal-product-name").textContent = activeProduct.name;
-  document.getElementById("modal-product-grade").textContent = activeProduct.grade;
+  document.getElementById("modal-product-name").textContent = pf(activeProduct, "name");
+  document.getElementById("modal-product-grade").textContent = pf(activeProduct, "grade");
 
   const packagingSelect = document.getElementById("modal-packaging");
   packagingSelect.innerHTML = activeProduct.packagings
@@ -220,28 +426,36 @@ function initMobileNav() {
   );
 }
 
+function populateContactProductSelect() {
+  const productSelect = document.getElementById("contact-product");
+  const previousValue = productSelect.value;
+  productSelect.innerHTML =
+    `<option value="">${t("form_product_placeholder")}</option>` +
+    PRODUCTS.map((p) => `<option value="${p.id}">${pf(p, "name")}</option>`).join("");
+  if (previousValue && PRODUCTS.some((p) => p.id === previousValue)) {
+    productSelect.value = previousValue;
+  }
+}
+
 function initContactForm() {
   const form = document.getElementById("contact-form");
   const productSelect = document.getElementById("contact-product");
-  productSelect.innerHTML =
-    `<option value="">Mahsulotni tanlang</option>` +
-    PRODUCTS.map((p) => `<option value="${p.name}">${p.name}</option>`).join("");
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     const name = document.getElementById("contact-name").value.trim();
     const phone = document.getElementById("contact-phone").value.trim();
-    const product = productSelect.value;
+    const product = PRODUCTS.find((p) => p.id === productSelect.value);
     const quantity = document.getElementById("contact-quantity").value.trim();
     const orderType = document.querySelector('input[name="contact-order-type"]:checked').value;
 
     const lines = [
-      "Assalomu alaykum! Yangi so'rov:",
-      `Ism: ${name}`,
-      `Telefon: ${phone}`,
-      product ? `Mahsulot: ${product}` : null,
-      quantity ? `Miqdori: ${quantity}` : null,
-      `Buyurtma turi: ${orderType}`
+      t("msg_contact_greeting"),
+      `${t("msg_contact_name")}: ${name}`,
+      `${t("msg_contact_phone")}: ${phone}`,
+      product ? `${t("msg_product")}: ${pf(product, "name")}` : null,
+      quantity ? `${t("msg_quantity")}: ${quantity}` : null,
+      `${t("msg_order_type")}: ${orderTypeLabel(orderType)}`
     ].filter(Boolean);
 
     const link = `https://t.me/${TELEGRAM_USERNAME}?text=${encodeURIComponent(lines.join("\n"))}`;
@@ -268,8 +482,66 @@ function initTelegramLinks() {
   });
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+function applyLanguage(lang) {
+  currentLang = lang === "ru" ? "ru" : "uz";
+  document.documentElement.lang = currentLang;
+
+  try {
+    localStorage.setItem("barokat-lang", currentLang);
+  } catch (e) {}
+
+  document.querySelectorAll("[data-i18n]").forEach((el) => {
+    const key = el.dataset.i18n;
+    if (UI_STRINGS[currentLang][key] !== undefined) el.textContent = UI_STRINGS[currentLang][key];
+  });
+  document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
+    const key = el.dataset.i18nPlaceholder;
+    if (UI_STRINGS[currentLang][key] !== undefined) el.placeholder = UI_STRINGS[currentLang][key];
+  });
+  document.querySelectorAll("[data-i18n-aria]").forEach((el) => {
+    const key = el.dataset.i18nAria;
+    if (UI_STRINGS[currentLang][key] !== undefined) el.setAttribute("aria-label", UI_STRINGS[currentLang][key]);
+  });
+
+  document.querySelectorAll(".filter-btn").forEach((btn) => {
+    const key = btn.dataset.filter;
+    const map = currentLang === "ru" ? CATEGORY_LABELS_RU : CATEGORY_LABELS;
+    if (map[key]) btn.textContent = map[key];
+  });
+
+  const langBtn = document.getElementById("lang-toggle");
+  if (langBtn) langBtn.textContent = currentLang === "ru" ? "UZ" : "RU";
+
   renderCatalog();
+  populateContactProductSelect();
+
+  if (activeProduct) {
+    document.getElementById("modal-product-name").textContent = pf(activeProduct, "name");
+    document.getElementById("modal-product-grade").textContent = pf(activeProduct, "grade");
+    const packagingSelect = document.getElementById("modal-packaging");
+    packagingSelect.innerHTML = activeProduct.packagings
+      .map((p) => `<option value="${packagingLabel(activeProduct, p)}">${packagingLabel(activeProduct, p)}</option>`)
+      .join("");
+  }
+
+  if (!document.getElementById("cart-modal").classList.contains("hidden")) {
+    renderCartModal();
+  }
+}
+
+function initLangToggle() {
+  let stored = null;
+  try {
+    stored = localStorage.getItem("barokat-lang");
+  } catch (e) {}
+  applyLanguage(stored === "ru" ? "ru" : "uz");
+
+  document.getElementById("lang-toggle").addEventListener("click", () => {
+    applyLanguage(currentLang === "ru" ? "uz" : "ru");
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
   initFilters();
   initSearch();
   initShowAll();
@@ -279,4 +551,6 @@ document.addEventListener("DOMContentLoaded", () => {
   initFooterYear();
   initTelegramLinks();
   initThemeToggle();
+  initCart();
+  initLangToggle();
 });
